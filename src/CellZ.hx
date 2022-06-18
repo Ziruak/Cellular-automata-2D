@@ -66,10 +66,49 @@ class CellZ {
             updateState(!alive);
         }
         sprite.addChild(inter);
+        // var shdr = new CellShader();
+        // shdr.red = 1;
+        // sprite.filter = new h2d.filter.Shader(shdr);
+        
+        var shader = new SineDeformShader();
+        shader.speed = 5;
+        shader.amplitude = .3;
+        shader.frequency = .1;
+        shader.texture = sprite.tile.getTexture();
+        sprite.addShader(shader);
     }
 
     public function remove() {
         inter.remove();
         sprite.remove();
+    }
+}
+
+class CellShader extends h3d.shader.ScreenShader {
+    static var SRC = {
+        @param var texture : Sampler2D;
+        @param var red : Float;
+        
+        function fragment() {
+            pixelColor = texture.get(input.uv);
+            pixelColor.r = red; // change red channel
+        }
+    }
+}
+
+class SineDeformShader extends hxsl.Shader {
+    static var SRC = {
+        @:import h3d.shader.Base2d;
+        
+        @param var texture : Sampler2D;
+        @param var speed : Float;
+        @param var frequency : Float;
+        @param var amplitude : Float;
+        
+        function fragment() {
+            calculatedUV.y += sin(calculatedUV.y * frequency + time * speed) * amplitude; // wave deform
+            calculatedUV.x += cos(calculatedUV.x * frequency + time * speed*0.7) * amplitude;
+            pixelColor = texture.get(calculatedUV);
+        }
     }
 }

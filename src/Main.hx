@@ -1,3 +1,9 @@
+import hxd.snd.Manager;
+import hxd.snd.effect.Pitch;
+import hxd.snd.ChannelGroup;
+import sdl.SoundChannel;
+import hxd.snd.Channel;
+import hxd.res.Sound;
 import h2d.Text;
 import hxd.fmt.grd.Data.Color;
 import hxd.res.DefaultFont;
@@ -113,9 +119,11 @@ var txtInpCellSize:h2d.TextInput;
             Values.cells[i[0]*Values.cellsJ+i[1]].updateState(true);
 
 		initToolBar();
+		//Res.gspd.play(true);
         }
 
     override  function update(dt:Float) {
+		
 		if (Values.autoSteps) {
 			time += dt;
 			if (time >= Values.refreshTime) {

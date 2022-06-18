@@ -8,7 +8,7 @@ class Values {
     public static var stay:Array<Int> = [4,1] ;
     public static var live:Array<Int> = [1] ;
     public static var countMyself:Bool = false;
-    public static var autoSteps:Bool = false;
+    public static var autoSteps:Bool = true;
 
     public static var tollBarLength:Int = 32;
 
