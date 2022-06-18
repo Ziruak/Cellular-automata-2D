@@ -73,6 +73,13 @@ class Values {
         }
     }
 
+    static public function updateCellSize(str:String) {
+        var pi = Std.parseInt(str);
+        if (pi != null && pi != cellSize) {
+            cellSize = pi;
+            for (i in cells) i.updateSprite();
+        }
+    }
 
 	static public function step() {
         //trace("Refrshing");

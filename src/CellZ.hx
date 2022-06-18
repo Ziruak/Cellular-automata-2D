@@ -45,7 +45,7 @@ class CellZ {
         }
     }
 
-    function updateSprite() {
+    public function updateSprite() {
         var tile:Tile;
         if (alive) tile = hxd.Res.cell_alive.toTile();
         else tile = hxd.Res.cell_dead.toTile();

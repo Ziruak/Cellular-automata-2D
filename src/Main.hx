@@ -19,6 +19,7 @@ var time : Float = 0;
 var txtInpTime:h2d.TextInput;
 var txtInpRule:h2d.TextInput;
 var txtInpSize:h2d.TextInput;
+var txtInpCellSize:h2d.TextInput;
 
 	function initToolBar() {
 		var toolBar = new Bitmap(h2d.Tile.fromColor(0x808080,s2d.width,Values.tollBarLength),s2d);
@@ -74,6 +75,14 @@ var txtInpSize:h2d.TextInput;
 		txtInpSize.textColor = 0x000000;
 		txtInpSize.text = Std.string(Values.cellsI)+'x'+Std.string(Values.cellsJ);
 
+		var cellSizeInpBg = new Bitmap(Tile.fromColor(0xffffff,32,Std.int(Values.tollBarLength/2)),toolBar);
+		cellSizeInpBg.x = sizeInpBg.x + 64 + 5;
+		cellSizeInpBg.y = Values.tollBarLength/3;
+		txtInpCellSize = new h2d.TextInput(DefaultFont.get(),cellSizeInpBg);
+		txtInpCellSize.inputWidth = 32;
+		txtInpCellSize.textColor = 0x000000;
+		txtInpCellSize.text = Std.string(Values.cellSize);
+
 		var updateBtnBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
 		updateBtnBg.x = s2d.width - 64 - 5;
 		updateBtnBg.y = Values.tollBarLength/3;
@@ -85,8 +94,11 @@ var txtInpSize:h2d.TextInput;
 			Values.setRefreshTime(txtInpTime.text);
 			Values.setRules(txtInpRule.text);
 			Values.setSize(txtInpSize.text,s2d);
+			Values.updateCellSize(txtInpCellSize.text);
 			time = 0;
 		}
+
+		
 	}
 
     override function init() {
