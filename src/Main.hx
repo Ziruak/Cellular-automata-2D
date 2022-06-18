@@ -96,7 +96,7 @@ var txtInpSize:h2d.TextInput;
                 Values.cells.push(new CellZ(i,j,false,s2d));
             }
         }
-        var aliveAtStart:Array<Array<Int>> = [[2,2],[8,8]];
+        var aliveAtStart:Array<Array<Int>> = [[5,2],[5,26]];
         for (i in aliveAtStart)
             Values.cells[i[0]*Values.cellsJ+i[1]].updateState(true);
 

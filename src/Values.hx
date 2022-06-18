@@ -1,7 +1,7 @@
 class Values {
     public static var cells:Array<CellZ>;
     public static var cellsI:Int = 11;
-    public  static  var cellsJ:Int = 11;
+    public  static  var cellsJ:Int = 29;
     public static var cellSize:Int = 64;
 
     public static var refreshTime:Float = 0.3;

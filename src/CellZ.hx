@@ -71,8 +71,8 @@ class CellZ {
         // sprite.filter = new h2d.filter.Shader(shdr);
         
         var shader = new SineDeformShader();
-        shader.speed = 9;
-        shader.amplitude = .3;
+        shader.speed = 10;
+        shader.amplitude = .4;
         shader.frequency = .1;
         shader.texture = sprite.tile.getTexture();
         sprite.addShader(shader);
@@ -109,6 +109,9 @@ class SineDeformShader extends hxsl.Shader {
             calculatedUV.y += sin(calculatedUV.y * frequency + time * speed) * amplitude; // wave deform
             calculatedUV.x += cos(calculatedUV.x * frequency + time * speed*0.7) * amplitude;
             pixelColor = texture.get(calculatedUV);
+            pixelColor.r *= input.uv.x;
+            pixelColor.b *= input.uv.y;
+            pixelColor.g *= input.position.x+input.position.y;
         }
     }
 }
