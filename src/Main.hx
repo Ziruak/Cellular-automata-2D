@@ -18,6 +18,7 @@ class Main extends hxd.App {
 var time : Float = 0;
 var cells:Array<CellZ>;
 var txtInpTime:h2d.TextInput;
+var txtInpRule:h2d.TextInput;
 
 	function initToolBar() {
 		var toolBar = new Bitmap(h2d.Tile.fromColor(0x808080,s2d.width,Values.tollBarLength),s2d);
@@ -47,6 +48,14 @@ var txtInpTime:h2d.TextInput;
 		txtInpTime.textColor = 0x000000;
 		txtInpTime.text = "1";
 
+		var ruleInpBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
+		ruleInpBg.x = txtInpBg.x + 32 + 5;
+		ruleInpBg.y = Values.tollBarLength/3;
+		txtInpRule = new h2d.TextInput(DefaultFont.get(),ruleInpBg);
+		txtInpRule.inputWidth = 64;
+		txtInpRule.textColor = 0x000000;
+		txtInpRule.text = "2,3 / 3";
+
 		var updateBtnBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
 		updateBtnBg.x = s2d.width - 64 - 5;
 		updateBtnBg.y = Values.tollBarLength/3;
@@ -55,7 +64,8 @@ var txtInpTime:h2d.TextInput;
 		updateBtnTxt.textColor = 0x000000;
 		var updateBtnInteract = new h2d.Interactive(64,Std.int(Values.tollBarLength/2),updateBtnBg);
 		updateBtnInteract.onClick = function(event:hxd.Event) {
-			Values.refreshTime = Std.parseFloat(txtInpTime.text);
+			Values.setRefreshTime(txtInpTime.text);
+			Values.setRules(txtInpRule.text);
 			time = 0;
 		}
 	}
