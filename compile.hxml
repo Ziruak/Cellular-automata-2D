@@ -1,0 +1,6 @@
+-cp src
+-hl hello.hl
+-lib heaps
+-lib hlsdl
+-main Main
+-D windowSize=1280x720
