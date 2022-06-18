@@ -1,6 +1,5 @@
 -cp src
--hl hello.hl
+-js hello.js
 -lib heaps
--lib hlsdl
 -main Main
--D windowSize=1280x720
+-debug
