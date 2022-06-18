@@ -1,12 +1,12 @@
 class Values {
     public static var cells:Array<CellZ>;
-    public static var cellsI:Int = 10;
-    public  static  var cellsJ:Int = 10;
+    public static var cellsI:Int = 11;
+    public  static  var cellsJ:Int = 11;
     public static var cellSize:Int = 64;
 
-    public static var refreshTime:Float = 1;
-    public static var stay:Array<Int> = [2,3] ;
-    public static var live:Array<Int> = [3] ;
+    public static var refreshTime:Float = 0.7;
+    public static var stay:Array<Int> = [4,1] ;
+    public static var live:Array<Int> = [1] ;
     public static var countMyself:Bool = false;
     public static var autoSteps:Bool = false;
 
@@ -34,7 +34,7 @@ class Values {
                     }
                 }
             }
-            if (nStay.length >0 || nLive.length >0) {
+            if (rulelist.length >= 2) {
                 stay = nStay.copy();
                 live = nLive.copy();
             }

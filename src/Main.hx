@@ -45,7 +45,7 @@ var txtInpSize:h2d.TextInput;
 		txtInpTime = new h2d.TextInput(DefaultFont.get(),txtInpBg);
 		txtInpTime.inputWidth = 32;
 		txtInpTime.textColor = 0x000000;
-		txtInpTime.text = "1";
+		txtInpTime.text = Std.string(Values.refreshTime);
 
 		var ruleInpBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
 		ruleInpBg.x = txtInpBg.x + 32 + 5;
@@ -53,7 +53,18 @@ var txtInpSize:h2d.TextInput;
 		txtInpRule = new h2d.TextInput(DefaultFont.get(),ruleInpBg);
 		txtInpRule.inputWidth = 64;
 		txtInpRule.textColor = 0x000000;
-		txtInpRule.text = "2,3 / 3 / 0";
+		var txt:String = "";
+		for (i in 0...Values.stay.length) {
+			txt += Std.string(Values.stay[i]);
+			if (i + 1 < Values.stay.length) txt += ','; 
+		}
+		txt += '/';
+		for (i in 0...Values.live.length) {
+			txt += Std.string(Values.live[i]);
+			if (i + 1 < Values.live.length) txt += ','; 
+		}
+		txt += '/'+(Values.countMyself?'1':'0');
+		txtInpRule.text = txt;
 
 		var sizeInpBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
 		sizeInpBg.x = ruleInpBg.x + 64 + 5;
@@ -61,7 +72,7 @@ var txtInpSize:h2d.TextInput;
 		txtInpSize = new h2d.TextInput(DefaultFont.get(),sizeInpBg);
 		txtInpSize.inputWidth = 64;
 		txtInpSize.textColor = 0x000000;
-		txtInpSize.text = "10x10";
+		txtInpSize.text = Std.string(Values.cellsI)+'x'+Std.string(Values.cellsJ);
 
 		var updateBtnBg = new Bitmap(Tile.fromColor(0xffffff,64,Std.int(Values.tollBarLength/2)),toolBar);
 		updateBtnBg.x = s2d.width - 64 - 5;
@@ -85,7 +96,7 @@ var txtInpSize:h2d.TextInput;
                 Values.cells.push(new CellZ(i,j,false,s2d));
             }
         }
-        var aliveAtStart:Array<Array<Int>> = [[1,1],[2,1],[1,3],[2,3],[3,2],[0,3]];
+        var aliveAtStart:Array<Array<Int>> = [[2,2],[8,8]];
         for (i in aliveAtStart)
             Values.cells[i[0]*Values.cellsJ+i[1]].updateState(true);
 

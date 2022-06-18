@@ -418,7 +418,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		this.txtInpTime = new h2d_TextInput(hxd_res_DefaultFont.get(),txtInpBg);
 		this.txtInpTime.inputWidth = 32;
 		this.txtInpTime.set_textColor(0);
-		this.txtInpTime.set_text("1");
+		this.txtInpTime.set_text(Std.string(Values.refreshTime));
 		var ruleInpBg = new h2d_Bitmap(h2d_Tile.fromColor(16777215,64,Values.tollBarLength / 2 | 0),toolBar);
 		ruleInpBg.posChanged = true;
 		ruleInpBg.x = txtInpBg.x + 32 + 5;
@@ -427,7 +427,28 @@ Main.prototype = $extend(hxd_App.prototype,{
 		this.txtInpRule = new h2d_TextInput(hxd_res_DefaultFont.get(),ruleInpBg);
 		this.txtInpRule.inputWidth = 64;
 		this.txtInpRule.set_textColor(0);
-		this.txtInpRule.set_text("2,3 / 3 / 0");
+		var txt = "";
+		var _g = 0;
+		var _g1 = Values.stay.length;
+		while(_g < _g1) {
+			var i = _g++;
+			txt += Std.string(Values.stay[i]);
+			if(i + 1 < Values.stay.length) {
+				txt += ",";
+			}
+		}
+		txt += "/";
+		var _g = 0;
+		var _g1 = Values.live.length;
+		while(_g < _g1) {
+			var i = _g++;
+			txt += Std.string(Values.live[i]);
+			if(i + 1 < Values.live.length) {
+				txt += ",";
+			}
+		}
+		txt += "/" + (Values.countMyself ? "1" : "0");
+		this.txtInpRule.set_text(txt);
 		var sizeInpBg = new h2d_Bitmap(h2d_Tile.fromColor(16777215,64,Values.tollBarLength / 2 | 0),toolBar);
 		sizeInpBg.posChanged = true;
 		sizeInpBg.x = ruleInpBg.x + 64 + 5;
@@ -436,7 +457,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		this.txtInpSize = new h2d_TextInput(hxd_res_DefaultFont.get(),sizeInpBg);
 		this.txtInpSize.inputWidth = 64;
 		this.txtInpSize.set_textColor(0);
-		this.txtInpSize.set_text("10x10");
+		this.txtInpSize.set_text(Std.string(Values.cellsI) + "x" + Std.string(Values.cellsJ));
 		var updateBtnBg = new h2d_Bitmap(h2d_Tile.fromColor(16777215,64,Values.tollBarLength / 2 | 0),toolBar);
 		updateBtnBg.posChanged = true;
 		updateBtnBg.x = this.s2d.width - 64 - 5;
@@ -466,7 +487,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 				Values.cells.push(new CellZ(i,j,false,this.s2d));
 			}
 		}
-		var aliveAtStart = [[1,1],[2,1],[1,3],[2,3],[3,2],[0,3]];
+		var aliveAtStart = [[2,2],[8,8]];
 		var _g = 0;
 		while(_g < aliveAtStart.length) {
 			var i = aliveAtStart[_g];
@@ -814,7 +835,7 @@ Values.setRules = function(str) {
 				}
 			}
 		}
-		if(nStay.length > 0 || nLive.length > 0) {
+		if(rulelist.length >= 2) {
 			Values.stay = nStay.slice();
 			Values.live = nLive.slice();
 		}
@@ -72863,12 +72884,12 @@ hx__registerFont = function(name,data) {
 	window.document.body.appendChild(div);
 };
 js_Boot.__toStr = ({ }).toString;
-Values.cellsI = 10;
-Values.cellsJ = 10;
+Values.cellsI = 11;
+Values.cellsJ = 11;
 Values.cellSize = 64;
-Values.refreshTime = 1;
-Values.stay = [2,3];
-Values.live = [3];
+Values.refreshTime = 0.7;
+Values.stay = [4,1];
+Values.live = [1];
 Values.countMyself = false;
 Values.autoSteps = false;
 Values.tollBarLength = 32;
