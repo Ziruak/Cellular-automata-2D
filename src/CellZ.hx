@@ -1,3 +1,4 @@
+import h2d.filter.Shader;
 import h2d.Interactive;
 import h2d.Tile;
 import h2d.Bitmap;
@@ -10,6 +11,7 @@ class CellZ {
     public var inter:Interactive;
     public var i:Int;
     public var j:Int;
+    public var shdr:CellShader;
 
     public function new(i:Int,j:Int,living:Bool = false,scene:h2d.Object) {
         alive = living;
@@ -17,6 +19,36 @@ class CellZ {
         parent = scene;
         this.i = i;
         this.j = j;
+
+        var tile:Tile = hxd.Res.cell_bnw.toTile();
+        tile.scaleToSize(Values.cellSize,Values.cellSize);
+        sprite = new Bitmap(tile,parent);
+        sprite.x = j*Values.cellSize;
+        sprite.y = i*Values.cellSize + Values.tollBarLength;
+        inter = new Interactive(Values.cellSize,Values.cellSize);
+        inter.onOver = function(event : hxd.Event) {
+            sprite.alpha = 0.8;
+        }
+        inter.onOut = function(event : hxd.Event) {
+            sprite.alpha = 1;
+        }
+        inter.onClick = function(event : hxd.Event) {
+            updateState(!alive);
+        }
+        sprite.addChild(inter);
+        
+        // var shader = new SineDeformShader();
+        // shader.speed = 10;
+        // shader.amplitude = .4;
+        // shader.frequency = .1;
+        // shader.texture = sprite.tile.getTexture();
+        // sprite.addShader(shader);
+
+        shdr = new CellShader();
+        shdr.red = 0;
+        shdr.green = 0;
+        shdr.texture = sprite.tile.getTexture();
+
         updateSprite();
     }
 
@@ -46,36 +78,23 @@ class CellZ {
     }
 
     public function updateSprite() {
-        var tile:Tile;
-        if (alive) tile = hxd.Res.cell_alive.toTile();
-        else tile = hxd.Res.cell_dead.toTile();
-        tile.scaleToSize(Values.cellSize,Values.cellSize);
-        inter.remove();
-        sprite.remove();
-        sprite = new Bitmap(tile,parent);
-        sprite.x = j*Values.cellSize;
-        sprite.y = i*Values.cellSize + Values.tollBarLength;
-        inter = new Interactive(Values.cellSize,Values.cellSize);
-        inter.onOver = function(event : hxd.Event) {
-            sprite.alpha = 0.8;
+        sprite.tile.scaleToSize(Values.cellSize,Values.cellSize);
+        if (alive) {
+            shdr.red = 0;
+            shdr.green = 0.75;
         }
-        inter.onOut = function(event : hxd.Event) {
-            sprite.alpha = 1;
+        else {
+            shdr.green = 0;
+            shdr.red = 0.75;
         }
-        inter.onClick = function(event : hxd.Event) {
-            updateState(!alive);
-        }
-        sprite.addChild(inter);
-        // var shdr = new CellShader();
-        // shdr.red = 1;
-        // sprite.filter = new h2d.filter.Shader(shdr);
+        sprite.filter = new Shader(shdr);
         
-        var shader = new SineDeformShader();
-        shader.speed = 10;
-        shader.amplitude = .4;
-        shader.frequency = .1;
-        shader.texture = sprite.tile.getTexture();
-        sprite.addShader(shader);
+        // var shader = new SineDeformShader();
+        // shader.speed = 10;
+        // shader.amplitude = .4;
+        // shader.frequency = .1;
+        // shader.texture = sprite.tile.getTexture();
+        // sprite.addShader(shader);
     }
 
     public function remove() {
@@ -88,10 +107,30 @@ class CellShader extends h3d.shader.ScreenShader {
     static var SRC = {
         @param var texture : Sampler2D;
         @param var red : Float;
+        @param var green : Float;
         
         function fragment() {
             pixelColor = texture.get(input.uv);
-            pixelColor.r = red; // change red channel
+            pixelColor.r *= red; // change red channel
+            pixelColor.g *= green;
+            pixelColor.b = 0.25;
+        }
+    }
+}
+
+class CellAlShader extends hxsl.Shader {
+    static var SRC = {
+        @input var input: {uv:Vec2};
+        var output : {pixelColor:Vec4};
+
+        @param var texture : Sampler2D;
+        @param var red : Float;
+        @param var green : Float;
+        
+        function fragment() {
+            output.pixelColor = texture.get(input.uv);
+            output.pixelColor.r *= red; // change red channel
+            output.pixelColor.g *= green;
         }
     }
 }
