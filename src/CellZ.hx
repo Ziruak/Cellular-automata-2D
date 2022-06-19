@@ -11,7 +11,7 @@ class CellZ {
     public var inter:Interactive;
     public var i:Int;
     public var j:Int;
-    public var shdr:CellShader;
+    public var shdr:CellAlShader;
 
     public function new(i:Int,j:Int,living:Bool = false,scene:h2d.Object) {
         alive = living;
@@ -44,10 +44,11 @@ class CellZ {
         // shader.texture = sprite.tile.getTexture();
         // sprite.addShader(shader);
 
-        shdr = new CellShader();
+        shdr = new CellAlShader();
         shdr.red = 0;
         shdr.green = 0;
         shdr.texture = sprite.tile.getTexture();
+        sprite.addShader(shdr);
 
         updateSprite();
     }
@@ -81,13 +82,12 @@ class CellZ {
         sprite.tile.scaleToSize(Values.cellSize,Values.cellSize);
         if (alive) {
             shdr.red = 0;
-            shdr.green = 0.75;
+            shdr.green = 0.8;
         }
         else {
             shdr.green = 0;
-            shdr.red = 0.75;
+            shdr.red = 0.8;
         }
-        sprite.filter = new Shader(shdr);
         
         // var shader = new SineDeformShader();
         // shader.speed = 10;
@@ -121,16 +121,17 @@ class CellShader extends h3d.shader.ScreenShader {
 class CellAlShader extends hxsl.Shader {
     static var SRC = {
         @input var input: {uv:Vec2};
-        var output : {pixelColor:Vec4};
+        var output : {color:Vec4};
 
         @param var texture : Sampler2D;
         @param var red : Float;
         @param var green : Float;
         
         function fragment() {
-            output.pixelColor = texture.get(input.uv);
-            output.pixelColor.r *= red; // change red channel
-            output.pixelColor.g *= green;
+            output.color = texture.get(input.uv);
+            output.color.r *= red;
+            output.color.g *= green;
+            output.color.b *= 0.3;
         }
     }
 }
