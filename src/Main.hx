@@ -61,7 +61,7 @@ var txtInpSize:h2d.TextInput;
 		txt += '/';
 		for (i in 0...Values.live.length) {
 			txt += Std.string(Values.live[i]);
-			if (i + 1 < Values.live.length) txt += ','; 
+			if (i + 1 < Values.live.length) txt += ',';
 		}
 		txt += '/'+(Values.countMyself?'1':'0');
 		txtInpRule.text = txt;
