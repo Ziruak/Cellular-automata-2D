@@ -119,7 +119,7 @@ var txtInpCellSize:h2d.TextInput;
             Values.cells[i[0]*Values.cellsJ+i[1]].updateState(true);
 
 		initToolBar();
-		Res.gspd2.play(true,0.3);
+		Res.gspd.play(true,0.3);
         }
 
     override  function update(dt:Float) {

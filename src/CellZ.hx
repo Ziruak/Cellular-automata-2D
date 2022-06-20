@@ -59,6 +59,8 @@ class CellZ {
         parent = cell.parent;
         alive = cell.alive;
         nextState = cell.nextState;
+        sprite = cell.sprite;
+        shdr = cell.shdr;
         updateSprite();
     }
 
@@ -80,6 +82,8 @@ class CellZ {
 
     public function updateSprite() {
         sprite.tile.scaleToSize(Values.cellSize,Values.cellSize);
+        sprite.x = j*Values.cellSize;
+        sprite.y = i*Values.cellSize + Values.tollBarLength;
         if (alive) {
             shdr.red = 0;
             shdr.green = 0.8;
