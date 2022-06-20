@@ -1,19 +1,7 @@
-import hxd.snd.Manager;
-import hxd.snd.effect.Pitch;
-import hxd.snd.ChannelGroup;
-import sdl.SoundChannel;
-import hxd.snd.Channel;
-import hxd.res.Sound;
 import h2d.Text;
-import hxd.fmt.grd.Data.Color;
 import hxd.res.DefaultFont;
-import format.swf.Data.FontData;
-import h2d.Font;
 import hxd.Event;
-import h3d.scene.Interactive;
-import format.amf.Value;
 import h2d.Tile;
-import h2d.TileGroup;
 import h2d.Bitmap;
 import hxd.Res;
 import CellZ;
@@ -119,7 +107,7 @@ var txtInpCellSize:h2d.TextInput;
             Values.cells[i[0]*Values.cellsJ+i[1]].updateState(true);
 
 		initToolBar();
-		Res.gspd.play(true,0.3);
+		Res.gspd2.play(true,0.3);
         }
 
     override  function update(dt:Float) {
